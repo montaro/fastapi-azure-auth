@@ -6,19 +6,18 @@ from demo_project.core.config import settings
 from fastapi import Depends
 from fastapi.security.api_key import APIKeyHeader
 
-from fastapi_azure_auth import MultiTenantAzureAuthorizationCodeBearer, SingleTenantAzureAuthorizationCodeBearer
+from fastapi_azure_auth import MultiTenantAzureAuthorizationCodeBearer
 from fastapi_azure_auth.exceptions import InvalidAuth
 from fastapi_azure_auth.user import User
 
 log = logging.getLogger(__name__)
 
-
-azure_scheme = SingleTenantAzureAuthorizationCodeBearer(
+azure_scheme = MultiTenantAzureAuthorizationCodeBearer(
     app_client_id=settings.APP_CLIENT_ID,
     scopes={
-        f'api://{settings.APP_CLIENT_ID}/user_impersonation': '**No client secret needed, leave blank**',
+        f'api://{settings.APP_CLIENT_ID}/user_impersonation': 'user_impersonation',
     },
-    tenant_id=settings.TENANT_ID,
+    validate_iss=False
 )
 
 
@@ -66,7 +65,7 @@ azure_scheme_auto_error_false = MultiTenantAzureAuthorizationCodeBearer(
     scopes={
         f'api://{settings.APP_CLIENT_ID}/user_impersonation': 'User impersonation',
     },
-    validate_iss=True,
+    validate_iss=False,
     iss_callable=issuer_fetcher,
     auto_error=False,
 )
