@@ -18,7 +18,7 @@ class Settings(AzureActiveDirectory):
     # "http://localhost:8080", "http://local.dockertoolbox.tiangolo.com"]'
     BACKEND_CORS_ORIGINS: List[Union[str, AnyHttpUrl]] = ['http://localhost:8000']
 
-    PROJECT_NAME: str = 'My Project'
+    PROJECT_NAME: str = 'montaro Project'
     SENTRY_DSN: Optional[HttpUrl] = None
 
     class Config:  # noqa

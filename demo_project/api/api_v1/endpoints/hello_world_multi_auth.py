@@ -23,4 +23,5 @@ async def world(request: Request, auth: Union[str, User] = Depends(multi_auth)) 
     if isinstance(auth, str):
         # An API key was used
         return {'api_key': True, 'azure_auth': False}
+    print(f'Username: {auth.name}')
     return {'api_key': False, 'azure_auth': True}
